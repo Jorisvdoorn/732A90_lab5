@@ -1,0 +1,39 @@
+---
+title: "732A90 Computational Statistics - Lab 5"
+author: "Joris van Doorn - jorva845"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+RNGversion(min(as.character(getRversion()), "3.6.2"))
+knitr::opts_chunk$set(echo = TRUE)
+library(RMaCzek)
+library(knitr)
+library(tidyr)
+library(tidyverse)
+library(tinytex)
+library(dplyr)
+library(readxl)
+library(stats)
+library(coda)
+```
+
+# Q1: Hypothesis testing
+
+*In 1970, the US Congress instituted a random selection process for the military draft. All 366 possible birth dates were placed in plastic capsules in a rotating drum and were selected one by one. The first date drawn from the drum received draft number one, the second date drawn received draft number two, etc. Then, eligible men were drafted in the order given by the draft number of their birth date. In a truly random lottery there should be no relationship between the date and the draft number. Your task is to investigate whether or not the draft numbers were randomly selected. The draft numbers (Y=Draft No) sorted by day of year (X=Day of year) are given in the file lottery.xls.*
+
+```{r}
+```
+ 
+$$p({Y_i}|{\mu_i)} = \frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{1}{2\sigma^2}(Y_1-\mu_1)^2} + \frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{1}{2\sigma^2}(Y_2-\mu_2)^2}+...+\frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{1}{2\sigma^2}(Y_n-\mu_n)^2}=(\frac{1}{\sqrt{2\pi\sigma^2}})^ne^{-\frac{1}{2\sigma^2}\sum_{i=1}^{n}(Y_i-\mu_i)^2}$$
+
+
+
+\newpage
+
+# Appendix
+
+```{r, ref.label=knitr::all_labels(),echo=TRUE,eval=FALSE,results='show'}
+```
+
