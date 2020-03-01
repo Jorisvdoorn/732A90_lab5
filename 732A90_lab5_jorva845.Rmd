@@ -18,6 +18,8 @@ library(readxl)
 library(stats)
 library(coda)
 library(gdata)
+library(boot)
+library(bootstrap)
 ```
 
 # Q1: Hypothesis testing
@@ -189,7 +191,66 @@ It remains approximately the same.
 
 *Plot the histogram of Price. Does it remind any conventional distribution? Compute the mean price.*
 
+```{r}
+data <- read.csv2("prices1.csv")
+hist(data$Price, breaks = 10)
+mean(data$Price)
+```
 
+It looks like a gamma distribution.
+
+## 2.
+
+*Estimate the distribution of the mean price of the house using bootstrap. Determine the bootstrap bias-correction and the variance of the mean price. Compute a 95% confidence interval for the mean price using bootstrap percentile, bootstrap BCa, and first-order normal approximation. (Hint: use boot(),boot.ci(),plot.boot(),print.bootci())*
+
+```{r}
+set.seed(12345)
+myboot <- function(data, ind){
+  data <- data[ind]
+  mean(data)
+}
+
+res <- boot(data[,1], myboot, R = 1000)
+
+var(res$t)
+
+hist(res$t, breaks = 50)
+
+boot.ci(res)
+```
+
+## 3.
+
+*Estimate the variance of the mean price using the jackknife and compare it with the bootstrap estimate*
+
+```{r}
+set.seed(12345)
+myjack <- function(data, ind){
+  data <- data[ind]
+  mean(data)
+}
+
+res <- jackknife(data[,1], myjack)
+
+var(res$jack.values)
+
+hist(res$jack.values, breaks = 50)
+```
+
+## 4.
+
+*Compare the confidence intervals obtained with respect to their length and the location of the estimated mean in these intervals.*
+
+Comparing the results of the bootstrap we found that the basic and the percentile CI got the smallest CI. However, the basic percentile CI is not standardized, and might thus give a skewed picture of the actual CI. It might be more valuable to look at the Basic CI. The Normal and BCa are both wider and thus might provide less information.
+
+Intervals : 
+Level      Normal              Basic         
+95%   (1010, 1150 )   (1011, 1147 )  
+
+Level     Percentile            BCa          
+95%   (1014, 1150 )   (1016, 1160 ) 
+
+\newpage
 
 # Appendix
 
